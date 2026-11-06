@@ -9,7 +9,7 @@ export const ArticleSearch = () => {
       onSubmit={event => event.preventDefault()}
     >
       <h1 className="h1 fw-bold text-body mb-2">Поиск запчастей по артикулу</h1>
-      <p className="text-body-secondary mb-4">Введите артикул, затем выберите производителя</p>
+      <p className="text-body-secondary mb-4">Введите артикул, затем выберите производителя.</p>
 
       <div className="article-search__field d-flex align-items-center gap-3 text-start bg-body-secondary border rounded-4 px-3">
         <i className="bi bi-search text-body-secondary fs-5" aria-hidden="true" />

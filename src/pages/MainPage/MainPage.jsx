@@ -1,5 +1,5 @@
 import { Header } from "./components";
-import { ArticleSearch } from "../../widgets";
+import { ArticleSearch, BrandList } from "../../widgets";
 
 export const MainPage = () => {
   return (
@@ -7,6 +7,7 @@ export const MainPage = () => {
       <Header />
       <main>
         <ArticleSearch />
+        <BrandList />
       </main>
     </>
   );
