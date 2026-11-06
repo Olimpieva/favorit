@@ -1,28 +1,18 @@
-import { useMemo } from "react";
-import { useSelector } from "react-redux";
-import { selectBrandsState } from "../../store/brands/brands.selectors";
-import { Dropdown } from "../../shared/ui";
-import { useSelectBrand } from "./hooks";
+import { Dropdown } from "@/shared/ui";
+import { useBrandDropdown } from "./hooks";
 
-export const BrandList = () => {
-  const { selectBrand } = useSelectBrand();
+export const BrandSelector = () => {
+  const { onSelect, items, label } = useBrandDropdown();
 
-  const { brands } = useSelector(selectBrandsState);
-
-  const items = useMemo(
-    () => brands.map(item => ({ value: item.brand, label: item.brand, parts: item.parts })),
-    [brands],
-  );
-
-  if (!brands.length) {
+  if (!items.length) {
     return null;
   }
 
   return (
     <Dropdown
-      label={`Производитель · ${brands.length} найдено`}
+      label={label}
       items={items}
-      onSelect={selectBrand}
+      onSelect={onSelect}
       placeholder="Выберите производителя"
       icon="bi bi-buildings"
       renderItem={item => (

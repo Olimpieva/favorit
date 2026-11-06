@@ -1,0 +1,1 @@
+export { useSelectPart } from "./useSelectPart";

@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { useDebounce } from "../../../shared/hooks";
+import { useDebounce } from "@/shared/hooks";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPartsByArticle, resetBrands } from "../../../store/brands/brands.actions";
-import { selectBrandsState } from "../../../store/brands/brands.selectors";
+import { fetchPartsByArticle, resetBrands } from "@/store/brands/brands.actions";
+import { selectBrandsState } from "@/store/brands/brands.selectors";
 
 export const useSearchArticle = () => {
   const dispatch = useDispatch();
-  const { loading, loaded, error, brands } = useSelector(selectBrandsState);
+  const { loading, loaded, error, items } = useSelector(selectBrandsState);
 
   const { value, setValue, debouncedValue } = useDebounce();
 
@@ -17,7 +17,7 @@ export const useSearchArticle = () => {
   useEffect(() => {
     const article = debouncedValue.trim();
 
-    if (!article || value !== debouncedValue) {
+    if (article.length < 2 || value !== debouncedValue) {
       dispatch(resetBrands());
       return;
     }
@@ -33,6 +33,6 @@ export const useSearchArticle = () => {
     onClear,
     loading,
     error,
-    isEmpty: loaded && brands.length === 0,
+    isEmpty: loaded && items.length === 0,
   };
 };

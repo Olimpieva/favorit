@@ -1,1 +1,1 @@
-export { searchParts } from "./search-parts";
+export * from "./parts.api";
