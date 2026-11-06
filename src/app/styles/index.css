@@ -22,3 +22,21 @@ main {
   max-width: 100%;
   box-sizing: border-box;
 }
+
+.article-search {
+  max-width: 40rem;
+}
+
+.article-search__field:focus-within {
+  border-color: var(--bs-primary) !important;
+}
+
+.article-search__input {
+  min-height: 0;
+  line-height: 1.2;
+}
+
+.article-search__input:focus {
+  color: var(--bs-body-color);
+  background-color: transparent;
+}
