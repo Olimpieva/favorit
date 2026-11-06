@@ -1,9 +1,10 @@
 import cn from "classnames";
 import { useDropdown } from "./hooks";
 
-export const Dropdown = ({ label, placeholder, items, onSelect, renderItem, icon }) => {
+export const Dropdown = ({ label, placeholder, items, value, onSelect, renderItem, icon }) => {
   const { open, selectedItem, rootRef, toggleRef, toggle, selectItem } = useDropdown(
     items,
+    value,
     onSelect,
   );
 

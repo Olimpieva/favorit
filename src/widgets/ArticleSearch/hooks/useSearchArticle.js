@@ -1,38 +1,53 @@
 import { useEffect } from "react";
 import { useDebounce } from "@/shared/hooks";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPartsByArticle, resetBrands } from "@/store/brands/brands.actions";
-import { selectBrandsState } from "@/store/brands/brands.selectors";
+import { resetSearch, setArticle } from "@/store/search/search.slice";
+import { selectSearchArticle } from "@/store/search/search.selectors";
+import { useGetPartsByArticleQuery } from "@/api/parts/parts.api";
 
 export const useSearchArticle = () => {
   const dispatch = useDispatch();
-  const { loading, loaded, error, items } = useSelector(selectBrandsState);
+
+  const article = useSelector(selectSearchArticle);
+
+  const { currentData, isFetching, isSuccess, isError, error } = useGetPartsByArticleQuery(
+    article,
+    {
+      skip: !article,
+    },
+  );
 
   const { value, setValue, debouncedValue } = useDebounce();
 
-  const onChange = event => setValue(event.target.value);
+  const onChange = event => {
+    const nextValue = event.target.value;
+    setValue(nextValue);
+    if (!nextValue.trim()) dispatch(resetSearch());
+  };
 
-  const onClear = () => setValue("");
+  const onClear = () => {
+    setValue("");
+    dispatch(resetSearch());
+  };
 
   useEffect(() => {
-    const article = debouncedValue.trim();
+    if (value !== debouncedValue) return;
 
-    if (article.length < 2 || value !== debouncedValue) {
-      dispatch(resetBrands());
+    const nextArticle = debouncedValue.trim();
+    if (nextArticle.length < 2) {
+      dispatch(resetSearch());
       return;
     }
 
-    const promise = dispatch(fetchPartsByArticle(article));
-    return () => promise.abort();
+    dispatch(setArticle(nextArticle));
   }, [dispatch, debouncedValue, value]);
 
   return {
     value,
-    setValue,
     onChange,
     onClear,
-    loading,
-    error,
-    isEmpty: loaded && items.length === 0,
+    loading: isFetching,
+    error: isError ? error?.message : null,
+    isEmpty: !isFetching && isSuccess && currentData?.length === 0,
   };
 };

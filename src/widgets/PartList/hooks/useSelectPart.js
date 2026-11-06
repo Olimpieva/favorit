@@ -1,39 +1,28 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentBrand, selectPartsByBrand } from "@/store/brands/brands.selectors";
-import {
-  fetchPartInfo,
-  selectPart,
-  resetSelectedPart,
-} from "@/store/selectedPart/selectedPart.actions";
+import { selectPart } from "@/store/search/search.slice";
+import { selectSelectedBrand, selectSelectedPartId } from "@/store/search/search.selectors";
 
-export const useSelectPart = () => {
+export const useSelectPart = parts => {
   const dispatch = useDispatch();
 
-  const parts = useSelector(selectPartsByBrand);
-  const selectedBrand = useSelector(selectCurrentBrand);
+  const brand = useSelector(selectSelectedBrand);
+  const partId = useSelector(selectSelectedPartId);
 
-  const handleSelectPart = part => {
-    dispatch(selectPart(part.number));
-    dispatch(fetchPartInfo({ number: part.number, brand: selectedBrand }));
+  const handleSelectPart = number => {
+    dispatch(selectPart(number));
   };
 
   useEffect(() => {
-    if (!parts.length || !selectedBrand) {
-      dispatch(resetSelectedPart());
+    if (!parts.length || !brand) {
+      if (partId !== null) dispatch(selectPart(null));
       return;
     }
 
-    const newCurrentPart = parts[0];
-
-    dispatch(selectPart(newCurrentPart.number));
-
-    const promise = dispatch(
-      fetchPartInfo({ number: newCurrentPart.number, brand: selectedBrand }),
-    );
-
-    return () => promise.abort();
-  }, [parts, selectedBrand, dispatch]);
+    if (!parts.some(part => part.number === partId)) {
+      dispatch(selectPart(parts[0].number));
+    }
+  }, [parts, brand, partId, dispatch]);
 
   return {
     handleSelectPart,

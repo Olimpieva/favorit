@@ -1,19 +1,29 @@
-import { selectPartsByBrand } from "@/store/brands/brands.selectors";
 import { useSelector } from "react-redux";
+import { selectSearchArticle, selectSelectedBrand } from "@/store/search/search.selectors";
+import { useGetPartsByArticleQuery } from "@/api/parts/parts.api";
+import { selectPartsByBrand } from "@/store/parts/parts.selectors";
 import { AnalogueList, PartInfo } from "./components";
 import { useSelectPart } from "./hooks";
 
 export const PartList = () => {
-  const parts = useSelector(selectPartsByBrand);
+  const article = useSelector(selectSearchArticle);
+  const brand = useSelector(selectSelectedBrand);
 
-  const { handleSelectPart } = useSelectPart();
+  const { parts } = useGetPartsByArticleQuery(article, {
+    skip: !article,
+    selectFromResult: ({ currentData }) => ({
+      parts: selectPartsByBrand(currentData, brand),
+    }),
+  });
+
+  const { handleSelectPart } = useSelectPart(parts);
 
   if (!parts.length) return null;
 
   return (
-    <div className="part-results row row-gap-4 flex-xl-nowrap flex-grow-1 mt-4 text-start">
+    <div className="row row-gap-4 flex-xl-nowrap flex-grow-1 mt-4 text-start min-h-0">
       <section
-        className="col-12 col-xl-6 d-flex flex-column"
+        className="col-12 col-xl-6 d-flex flex-column min-h-0"
         aria-labelledby="searched-part-heading"
       >
         <h2
@@ -27,7 +37,9 @@ export const PartList = () => {
 
         <div className="flex-shrink-0">
           {parts.map((part, index) => (
-            <PartInfo key={part.goodsID} part={part} open={index === 0} />
+            <div key={part.goodsID} onClick={() => handleSelectPart(part.number)}>
+              <PartInfo part={part} open={index === 0} />
+            </div>
           ))}
         </div>
       </section>

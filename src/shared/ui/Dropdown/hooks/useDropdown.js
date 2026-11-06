@@ -1,18 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 
-export const useDropdown = (items, onSelect) => {
+export const useDropdown = (items, value, onSelect) => {
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(null);
 
   const rootRef = useRef(null);
   const toggleRef = useRef(null);
 
-  const selectedItem = items.find(item => item.value === selectedValue) ?? null;
+  const selectedItem = items.find(item => item.value === value) ?? null;
 
   const toggle = () => setOpen(current => !current);
 
   const selectItem = item => {
-    setSelectedValue(item.value);
     setOpen(false);
     toggleRef.current?.focus();
     onSelect(item);

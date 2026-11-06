@@ -2,7 +2,7 @@ import { Dropdown } from "@/shared/ui";
 import { useBrandDropdown } from "./hooks";
 
 export const BrandSelector = () => {
-  const { onSelect, items, label } = useBrandDropdown();
+  const { value, onSelect, items, label } = useBrandDropdown();
 
   if (!items.length) {
     return null;
@@ -12,6 +12,7 @@ export const BrandSelector = () => {
     <Dropdown
       label={label}
       items={items}
+      value={value}
       onSelect={onSelect}
       placeholder="Выберите производителя"
       icon="bi bi-buildings"

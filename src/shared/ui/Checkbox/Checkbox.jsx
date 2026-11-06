@@ -5,7 +5,7 @@ export const Checkbox = ({ label, checked, onChange, disabled, className, ...pro
     <input
       {...props}
       type="checkbox"
-      className={cn("form-check-input flex-shrink-0 focus-ring mt-0", {
+      className={cn("form-check-input flex-shrink-0 shadow-none mt-0", {
         "bg-primary border-primary": checked,
         "border-secondary": !checked,
       })}

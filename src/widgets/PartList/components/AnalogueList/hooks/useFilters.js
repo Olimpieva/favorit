@@ -10,7 +10,7 @@ export const useFilters = (data, selectedBrand, selectedPartId) => {
 
   const [inStock, setInStock] = useState(false);
 
-  const query = value.trim().length >= 2 ? debouncedValue.trim() : "";
+  const query = value.trim().length >= 2 ? debouncedValue.trim().toLowerCase() : "";
 
   const analogues = useMemo(() => {
     const currentAnalogues = data?.analogues ?? [];
@@ -31,9 +31,9 @@ export const useFilters = (data, selectedBrand, selectedPartId) => {
   }, [inStock, data, query]);
 
   useEffect(() => {
-    clearSearchString();
+    setValue("");
     setInStock(false);
-  }, [selectedBrand, selectedPartId]);
+  }, [selectedBrand, selectedPartId, setValue]);
 
   return {
     analogues,
