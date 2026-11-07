@@ -1,2 +1,3 @@
 export { ArticleSearch } from "./ArticleSearch";
-export { BrandList } from "./BrandList";
+export { BrandSelector } from "./BrandSelector";
+export { PartList } from "./PartList";

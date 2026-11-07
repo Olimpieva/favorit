@@ -1,1 +1,0 @@
-export { BrandList } from "./BrandList";

@@ -17,6 +17,10 @@ export default defineConfig([
       reactRefresh.configs.vite,
     ],
     settings: { react: { version: "detect" } },
+    rules: {
+      "react/prop-types": "off",
+      "react-hooks/set-state-in-effect": "off",
+    },
     languageOptions: {
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },

@@ -1,0 +1,1 @@
+export { usePartDetails } from "./usePartDetails";

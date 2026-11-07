@@ -6,3 +6,10 @@ export const errors = {
   429: "Слишком много запросов. Попробуйте позже.",
   500: "Произошла ошибка на сервере. Попробуйте позже.",
 };
+
+export const transformApiError = error => {
+  const status = error.originalStatus ?? error.status;
+  const message = error.data?.error ? String(error.data.error) : errors[status] || errors[500];
+
+  return { ...error, message };
+};

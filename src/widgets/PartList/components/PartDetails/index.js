@@ -1,0 +1,1 @@
+export { PartDetails } from "./PartDetails";

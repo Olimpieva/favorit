@@ -1,13 +1,14 @@
 import { Header } from "./components";
-import { ArticleSearch, BrandList } from "../../widgets";
+import { ArticleSearch, BrandSelector, PartList } from "@/widgets";
 
 export const MainPage = () => {
   return (
     <>
       <Header />
-      <main>
+      <main className="app-content d-flex flex-column flex-grow-1 w-100 min-h-0">
         <ArticleSearch />
-        <BrandList />
+        <BrandSelector />
+        <PartList />
       </main>
     </>
   );

@@ -1,38 +1,53 @@
 import { useEffect } from "react";
-import { useDebounce } from "../../../shared/hooks";
+import { useDebounce } from "@/shared/hooks";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPartsByArticle, resetBrands } from "../../../store/brands/brands.actions";
-import { selectBrandsState } from "../../../store/brands/brands.selectors";
+import { resetSearch, setArticle, selectSearchArticle } from "@/store/search";
+import { selectBrands } from "@/store/parts";
+import { useGetPartsByArticleQuery } from "@/api/parts/parts.api";
 
 export const useSearchArticle = () => {
   const dispatch = useDispatch();
-  const { loading, loaded, error, brands } = useSelector(selectBrandsState);
+
+  const article = useSelector(selectSearchArticle);
+  const brands = useSelector(selectBrands);
+
+  const { isFetching, isSuccess, isError, error, refetch } = useGetPartsByArticleQuery(article, {
+    skip: !article,
+  });
 
   const { value, setValue, debouncedValue } = useDebounce();
 
-  const onChange = event => setValue(event.target.value);
+  const onChange = event => {
+    const nextValue = event.target.value;
+    setValue(nextValue);
+    if (!nextValue.trim()) dispatch(resetSearch());
+  };
 
-  const onClear = () => setValue("");
+  const onClear = () => {
+    setValue("");
+    dispatch(resetSearch());
+  };
 
   useEffect(() => {
-    const article = debouncedValue.trim();
+    if (value !== debouncedValue) return;
 
-    if (!article || value !== debouncedValue) {
-      dispatch(resetBrands());
+    const nextArticle = debouncedValue.trim();
+
+    if (nextArticle.length < 2) {
+      dispatch(resetSearch());
       return;
     }
 
-    const promise = dispatch(fetchPartsByArticle(article));
-    return () => promise.abort();
+    dispatch(setArticle(nextArticle));
   }, [dispatch, debouncedValue, value]);
 
   return {
     value,
-    setValue,
     onChange,
     onClear,
-    loading,
-    error,
-    isEmpty: loaded && brands.length === 0,
+    onRetry: refetch,
+    loading: isFetching,
+    error: isError ? error?.message : null,
+    isEmpty: Boolean(article) && !isFetching && isSuccess && !brands.length,
   };
 };
