@@ -1,16 +1,36 @@
-# React + Vite
+# Поиск автозапчастей
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Открыть приложение](https://favorit-tau.vercel.app/)
 
-Currently, two official plugins are available:
+Поиск производителей по артикулу, выбор детали и просмотр её аналогов и предложений по складам через
+API Favorit Parts.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Стек: React, Redux Toolkit / RTK Query, JavaScript, Bootstrap, Vite. Включён React Compiler.
 
-## React Compiler
+## Локальный запуск
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Нужен Node.js 22.12+.
 
-## Expanding the ESLint configuration
+```bash
+npm ci
+cp .env.example .env.local
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+В `.env.example` указан публичный демо-ключ Favorit. Обе переменные окружения обязательны.Для
+использования своего ключа измените значения в `.env.local`:
+
+```dotenv
+FAVORIT_API_BASE_URL=https://api.favorit-parts.ru/hs/hsprice/
+FAVORIT_API_KEY=ваш_ключ
+```
+
+После изменения переменных перезапустите dev-сервер.
+
+## Проверки и сборка
+
+```bash
+npm run lint
+npm run build
+npm run preview
+```

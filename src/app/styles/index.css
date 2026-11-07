@@ -37,6 +37,7 @@
 
 .app-content {
   padding-inline: 40px;
+  padding-bottom: 40px;
 }
 
 .article-search {
@@ -46,16 +47,6 @@
 .analogue-list {
   max-height: 60dvh;
   overscroll-behavior-y: contain;
-}
-
-@media (min-width: 1200px) {
-  #root {
-    height: 100dvh;
-  }
-
-  .analogue-list {
-    max-height: none;
-  }
 }
 
 .search-string:focus-within,
