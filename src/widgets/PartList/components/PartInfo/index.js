@@ -1,1 +1,0 @@
-export { PartInfo } from "./PartInfo";

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import searchSlice from "./search/search.slice";
+import { searchSlice } from "./search";
 import { partsApi } from "@/api/parts/parts.api";
 
 const store = configureStore({

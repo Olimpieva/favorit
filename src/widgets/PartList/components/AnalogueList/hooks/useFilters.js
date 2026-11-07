@@ -1,7 +1,7 @@
 import { useDebounce } from "@/shared/hooks";
 import { useEffect, useMemo, useState } from "react";
 
-export const useFilters = (data, selectedBrand, selectedPartId) => {
+export const useFilters = (data, selectedBrand, selectedPartNumber) => {
   const { value, setValue, debouncedValue } = useDebounce();
 
   const onSearchStringChange = event => setValue(event.target.value);
@@ -33,7 +33,7 @@ export const useFilters = (data, selectedBrand, selectedPartId) => {
   useEffect(() => {
     setValue("");
     setInStock(false);
-  }, [selectedBrand, selectedPartId, setValue]);
+  }, [selectedBrand, selectedPartNumber, setValue]);
 
   return {
     analogues,

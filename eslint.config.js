@@ -19,6 +19,7 @@ export default defineConfig([
     settings: { react: { version: "detect" } },
     rules: {
       "react/prop-types": "off",
+      "react-hooks/set-state-in-effect": "off",
     },
     languageOptions: {
       globals: globals.browser,

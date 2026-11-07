@@ -2,11 +2,11 @@ import { SearchString } from "@/shared/ui";
 import { useSearchArticle } from "./hooks";
 
 export const ArticleSearch = () => {
-  const { value, onChange, onClear, loading, error, isEmpty } = useSearchArticle();
+  const { value, onChange, onClear, onRetry, loading, error, isEmpty } = useSearchArticle();
 
   return (
     <form
-      className="article-search w-100 mx-auto px-3 pt-4"
+      className="article-search w-100 flex-shrink-0 mx-auto px-3 pt-4"
       onSubmit={event => event.preventDefault()}
     >
       <h1 className="h1 fw-bold text-body mb-2">Поиск запчастей по артикулу</h1>
@@ -30,7 +30,10 @@ export const ArticleSearch = () => {
 
       {error && (
         <div className="alert alert-danger mt-3 mb-0" role="alert">
-          {error}
+          <p className="mb-2">{error}</p>
+          <button type="button" className="btn btn-outline-danger btn-sm" onClick={onRetry}>
+            Повторить
+          </button>
         </div>
       )}
 

@@ -1,21 +1,19 @@
 import { useEffect } from "react";
 import { useDebounce } from "@/shared/hooks";
 import { useDispatch, useSelector } from "react-redux";
-import { resetSearch, setArticle } from "@/store/search/search.slice";
-import { selectSearchArticle } from "@/store/search/search.selectors";
+import { resetSearch, setArticle, selectSearchArticle } from "@/store/search";
+import { selectBrands } from "@/store/parts";
 import { useGetPartsByArticleQuery } from "@/api/parts/parts.api";
 
 export const useSearchArticle = () => {
   const dispatch = useDispatch();
 
   const article = useSelector(selectSearchArticle);
+  const brands = useSelector(selectBrands);
 
-  const { currentData, isFetching, isSuccess, isError, error } = useGetPartsByArticleQuery(
-    article,
-    {
-      skip: !article,
-    },
-  );
+  const { isFetching, isSuccess, isError, error, refetch } = useGetPartsByArticleQuery(article, {
+    skip: !article,
+  });
 
   const { value, setValue, debouncedValue } = useDebounce();
 
@@ -34,6 +32,7 @@ export const useSearchArticle = () => {
     if (value !== debouncedValue) return;
 
     const nextArticle = debouncedValue.trim();
+
     if (nextArticle.length < 2) {
       dispatch(resetSearch());
       return;
@@ -46,8 +45,9 @@ export const useSearchArticle = () => {
     value,
     onChange,
     onClear,
+    onRetry: refetch,
     loading: isFetching,
     error: isError ? error?.message : null,
-    isEmpty: !isFetching && isSuccess && currentData?.length === 0,
+    isEmpty: Boolean(article) && !isFetching && isSuccess && !brands.length,
   };
 };

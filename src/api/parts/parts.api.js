@@ -15,7 +15,7 @@ export const partsApi = createApi({
       transformResponse: response => response.goods ?? [],
       transformErrorResponse: transformApiError,
     }),
-    getPartInfo: build.query({
+    getPartDetails: build.query({
       query: ({ number, brand }) => ({
         url: "",
         params: { number, brand, analogues: "on" },
@@ -26,4 +26,4 @@ export const partsApi = createApi({
   }),
 });
 
-export const { useGetPartsByArticleQuery, useGetPartInfoQuery } = partsApi;
+export const { useGetPartsByArticleQuery, useGetPartDetailsQuery } = partsApi;

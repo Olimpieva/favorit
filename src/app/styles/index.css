@@ -59,7 +59,8 @@
 }
 
 .search-string:focus-within,
-.app-dropdown__toggle:focus-visible {
+.app-dropdown__toggle:focus-visible,
+.checkbox input:focus-visible {
   border-color: var(--bs-primary) !important;
 }
 

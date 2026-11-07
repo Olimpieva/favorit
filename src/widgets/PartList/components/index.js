@@ -1,2 +1,2 @@
-export { PartInfo } from "./PartInfo";
+export { PartDetails } from "./PartDetails";
 export { AnalogueList } from "./AnalogueList";

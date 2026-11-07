@@ -1,20 +1,16 @@
 import cn from "classnames";
 import { Offers, Tags } from "./components";
 import { formatCurrency } from "@/shared/helpers";
-import { minPrice } from "./PartInfo.utils";
+import { usePartDetails } from "./hooks";
 
-export const PartInfo = ({ part, open = false, isAnalogue = false }) => {
-  const offers = part.warehouses ?? [];
-  const inStock = Number(part.count) > 0;
-  const availableOffers = offers.filter(offer => Number(offer.stock) > 0);
-  const price = minPrice(
-    (availableOffers.length ? availableOffers : offers).map(offer => offer.price),
-  );
+export const PartDetails = ({ part, open = false, isAnalogue = false, selected = false }) => {
+  const { inStock, price, offers } = usePartDetails(part);
 
   return (
     <details
-      className={cn("border rounded-4 bg-body mb-3", { "border-primary": !isAnalogue })}
+      className={cn("border rounded-4 bg-body mb-3", { "border-primary": selected })}
       open={open}
+      aria-current={selected ? "true" : undefined}
     >
       <summary className="d-flex flex-column flex-sm-row align-items-sm-center gap-4 p-4">
         <span className="flex-grow-1 text-break">

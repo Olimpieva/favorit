@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPart } from "@/store/search/search.slice";
-import { selectSelectedBrand, selectSelectedPartId } from "@/store/search/search.selectors";
+import { selectPart, selectSelectedBrand, selectSelectedPartNumber } from "@/store/search";
 
 export const useSelectPart = parts => {
   const dispatch = useDispatch();
 
   const brand = useSelector(selectSelectedBrand);
-  const partId = useSelector(selectSelectedPartId);
+  const selectedPartNumber = useSelector(selectSelectedPartNumber);
 
   const handleSelectPart = number => {
     dispatch(selectPart(number));
@@ -15,16 +14,19 @@ export const useSelectPart = parts => {
 
   useEffect(() => {
     if (!parts.length || !brand) {
-      if (partId !== null) dispatch(selectPart(null));
+      if (selectedPartNumber !== null) dispatch(selectPart(null));
       return;
     }
 
-    if (!parts.some(part => part.number === partId)) {
+    const hasSelectedPart = parts.some(part => part.number === selectedPartNumber);
+
+    if (!hasSelectedPart) {
       dispatch(selectPart(parts[0].number));
     }
-  }, [parts, brand, partId, dispatch]);
+  }, [parts, brand, selectedPartNumber, dispatch]);
 
   return {
+    selectedPartNumber,
     handleSelectPart,
   };
 };

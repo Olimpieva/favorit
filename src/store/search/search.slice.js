@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { article: null, brand: null, partId: null };
+const initialState = { article: null, brand: null, partNumber: null };
 
 const searchSlice = createSlice({
   name: "search",
@@ -11,16 +11,16 @@ const searchSlice = createSlice({
 
       state.article = payload;
       state.brand = null;
-      state.partId = null;
+      state.partNumber = null;
     },
     selectBrand(state, { payload }) {
       if (state.brand === payload) return;
 
       state.brand = payload;
-      state.partId = null;
+      state.partNumber = null;
     },
     selectPart(state, { payload }) {
-      state.partId = payload;
+      state.partNumber = payload;
     },
     resetSearch: () => initialState,
   },

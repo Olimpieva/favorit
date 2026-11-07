@@ -1,5 +1,4 @@
 export const errors = {
-  network: "Не удалось подключиться к серверу. Проверьте соединение и попробуйте позже.",
   400: "Некорректный запрос. Проверьте введённые данные.",
   401: "Ошибка авторизации.",
   403: "Доступ запрещён.",
@@ -10,11 +9,7 @@ export const errors = {
 
 export const transformApiError = error => {
   const status = error.originalStatus ?? error.status;
-  const message = error.data?.error
-    ? String(error.data.error)
-    : error.status === "FETCH_ERROR"
-      ? errors.network
-      : errors[status] || errors[500];
+  const message = error.data?.error ? String(error.data.error) : errors[status] || errors[500];
 
   return { ...error, message };
 };

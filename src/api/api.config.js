@@ -7,6 +7,7 @@ export const apiConfig = {
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: apiConfig.baseUrl,
+  timeout: 15_000,
   paramsSerializer: params => new URLSearchParams({ ...params, key: apiConfig.key }).toString(),
   validateStatus: (response, data) =>
     response.ok && data !== null && typeof data === "object" && !Array.isArray(data) && !data.error,
