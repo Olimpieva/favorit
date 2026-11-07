@@ -1,7 +1,9 @@
 import { formatDate, formatCurrency } from "@/shared/helpers";
+import { SortableHeading } from "@/shared/ui";
+import { useSortOffers } from "./hooks/useSortOffers";
 
 export const Offers = ({ part }) => {
-  const offers = part.warehouses ?? [];
+  const { sort, offers, handleSort } = useSortOffers(part.warehouses);
 
   return (
     <div className="border-top p-3 p-sm-4">
@@ -17,18 +19,16 @@ export const Offers = ({ part }) => {
                 <i className="bi bi-house-door me-2" aria-hidden="true" />
                 Склад
               </th>
-              <th scope="col" className="text-end text-body-secondary fw-medium">
-                <i className="bi bi-tag me-2" aria-hidden="true" />
+              <SortableHeading field="price" sort={sort} onSort={handleSort} icon="bi-tag">
                 Цена
-              </th>
+              </SortableHeading>
               <th scope="col" className="text-end text-body-secondary fw-medium">
                 <i className="bi bi-box-seam me-2" aria-hidden="true" />
                 Остаток
               </th>
-              <th scope="col" className="text-end text-body-secondary fw-medium">
-                <i className="bi bi-truck me-2" aria-hidden="true" />
+              <SortableHeading field="shipmentDate" sort={sort} onSort={handleSort} icon="bi-truck">
                 Отправка
-              </th>
+              </SortableHeading>
             </tr>
           </thead>
 
