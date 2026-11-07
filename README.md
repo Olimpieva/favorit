@@ -17,8 +17,9 @@ cp .env.example .env.local
 npm run dev
 ```
 
-В `.env.example` указан публичный демо-ключ Favorit. Обе переменные окружения обязательны.Для
-использования своего ключа измените значения в `.env.local`:
+В `.env.example` указан публичный демо-ключ Favorit. Обе переменные окружения обязательны
+
+Для использования своего ключа измените значения в `.env.local`:
 
 ```dotenv
 FAVORIT_API_BASE_URL=https://api.favorit-parts.ru/hs/hsprice/
